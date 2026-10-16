@@ -1,0 +1,4 @@
+<resources>
+    <!-- Compose owns the real theming; this is only the window-level base. -->
+    <style name="Theme.RecipeApp" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
