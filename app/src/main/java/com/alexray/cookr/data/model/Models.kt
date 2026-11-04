@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.data.model
+package com.alexray.cookr.data.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

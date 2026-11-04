@@ -1,8 +1,8 @@
-package com.alexray.recipeapp.ui.auth
+package com.alexray.cookr.ui.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexray.recipeapp.data.repository.AuthRepository
+import com.alexray.cookr.data.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

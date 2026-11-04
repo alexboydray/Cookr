@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.auth
+package com.alexray.cookr.ui.auth
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -41,7 +41,7 @@ fun AuthScreen(vm: AuthViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "Recipe App",
+                text = "Cookr",
                 style = MaterialTheme.typography.headlineMedium,
             )
             Spacer(Modifier.height(8.dp))

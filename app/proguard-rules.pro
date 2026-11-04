@@ -2,10 +2,10 @@
 -keepattributes *Annotation*, InnerClasses
 -dontnote kotlinx.serialization.**
 
--keepclassmembers class com.alexray.recipeapp.data.model.** {
+-keepclassmembers class com.alexray.cookr.data.model.** {
     *** Companion;
     kotlinx.serialization.KSerializer serializer(...);
 }
--keepclasseswithmembers class com.alexray.recipeapp.data.model.** {
+-keepclasseswithmembers class com.alexray.cookr.data.model.** {
     kotlinx.serialization.KSerializer serializer(...);
 }

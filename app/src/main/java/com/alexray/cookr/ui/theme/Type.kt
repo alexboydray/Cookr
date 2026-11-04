@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.theme
+package com.alexray.cookr.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

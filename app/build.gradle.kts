@@ -17,7 +17,7 @@ fun secret(key: String): String =
     localProps.getProperty(key) ?: System.getenv(key) ?: ""
 
 android {
-    namespace = "com.alexray.recipeapp"
+    namespace = "com.alexray.cookr"
 
     // 37 because several AndroidX artifacts now declare minCompileSdk 37.
     // targetSdk stays at 36 on purpose: compiling against newer APIs is
@@ -27,7 +27,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.alexray.recipeapp"
+        applicationId = "com.alexray.cookr"
         minSdk { version = release(26) }
         targetSdk { version = release(36) }
         versionCode = 1

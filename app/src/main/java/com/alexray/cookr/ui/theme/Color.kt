@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.theme
+package com.alexray.cookr.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

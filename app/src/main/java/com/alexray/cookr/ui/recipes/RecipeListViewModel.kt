@@ -1,9 +1,9 @@
-package com.alexray.recipeapp.ui.recipes
+package com.alexray.cookr.ui.recipes
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alexray.recipeapp.data.model.Recipe
-import com.alexray.recipeapp.data.repository.RecipeRepository
+import com.alexray.cookr.data.model.Recipe
+import com.alexray.cookr.data.repository.RecipeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
