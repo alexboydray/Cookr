@@ -1,4 +1,4 @@
-# Recipe App
+# Cookr
 
 Android app for saving recipes from a pasted URL, planning meals for a week,
 and generating a grocery list from the plan. Multi-user: recipes belong to an
@@ -38,7 +38,7 @@ KSP/version coupling.
 ## Layout
 
 ```
-app/src/main/java/com/alexray/recipeapp/
+app/src/main/java/com/alexray/cookr/
   MainActivity.kt
   data/
     SupabaseClient.kt      single client instance
@@ -123,7 +123,7 @@ lot in 2026:
 - Re-host scraped images in Supabase Storage, or hotlink the source? Re-hosting
   costs storage but survives dead links.
 - Offline reading: add a Room cache, or stay online-only for v1?
-- `applicationId` is `com.alexray.recipeapp` — change it before any Play
+- `applicationId` is `com.alexray.cookr` — change it before any Play
   Store submission if you want a domain you control.
 - `isMinifyEnabled` is off for release. Turning it on needs the
   kotlinx.serialization keep rules in `proguard-rules.pro` verified first.

@@ -1,6 +1,6 @@
-package com.alexray.recipeapp.data.repository
+package com.alexray.cookr.data.repository
 
-import com.alexray.recipeapp.data.Supabase
+import com.alexray.cookr.data.Supabase
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import io.github.jan.supabase.auth.status.SessionStatus

@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.navigation
+package com.alexray.cookr.ui.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.alexray.recipeapp.data.Supabase
-import com.alexray.recipeapp.data.repository.AuthRepository
-import com.alexray.recipeapp.ui.auth.AuthScreen
-import com.alexray.recipeapp.ui.recipes.RecipeListScreen
+import com.alexray.cookr.data.Supabase
+import com.alexray.cookr.data.repository.AuthRepository
+import com.alexray.cookr.ui.auth.AuthScreen
+import com.alexray.cookr.ui.recipes.RecipeListScreen
 import io.github.jan.supabase.auth.status.SessionStatus
 
 private object Routes {

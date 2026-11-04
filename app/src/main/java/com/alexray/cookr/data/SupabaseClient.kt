@@ -1,6 +1,6 @@
-package com.alexray.recipeapp.data
+package com.alexray.cookr.data
 
-import com.alexray.recipeapp.BuildConfig
+import com.alexray.cookr.BuildConfig
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest

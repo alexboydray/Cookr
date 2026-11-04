@@ -1,10 +1,10 @@
-package com.alexray.recipeapp.data.repository
+package com.alexray.cookr.data.repository
 
-import com.alexray.recipeapp.data.Supabase
-import com.alexray.recipeapp.data.model.Recipe
-import com.alexray.recipeapp.data.model.RecipeDetail
-import com.alexray.recipeapp.data.model.RecipeIngredient
-import com.alexray.recipeapp.data.model.RecipeStep
+import com.alexray.cookr.data.Supabase
+import com.alexray.cookr.data.model.Recipe
+import com.alexray.cookr.data.model.RecipeDetail
+import com.alexray.cookr.data.model.RecipeIngredient
+import com.alexray.cookr.data.model.RecipeStep
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Order
 

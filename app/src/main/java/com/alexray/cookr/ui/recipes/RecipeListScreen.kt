@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.recipes
+package com.alexray.cookr.ui.recipes
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -29,7 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.alexray.recipeapp.data.model.Recipe
+import com.alexray.cookr.data.model.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

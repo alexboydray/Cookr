@@ -1,4 +1,4 @@
--- Recipe App — initial Supabase schema
+-- Cookr — initial Supabase schema
 -- Run in the Supabase SQL editor on a fresh project.
 -- Assumes Supabase Auth (auth.users) is the identity source.
 

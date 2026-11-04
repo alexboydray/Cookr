@@ -1,4 +1,4 @@
-package com.alexray.recipeapp.ui.theme
+package com.alexray.cookr.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -44,7 +44,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun RecipeAppTheme(
+fun CookrTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Material You wallpaper colours, available from Android 12.
     dynamicColor: Boolean = true,
