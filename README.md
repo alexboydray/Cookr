@@ -1,129 +1,70 @@
-# Cookr
+<p align="center">
+  <img src="docs/banner.svg" alt="Cookr" width="100%">
+</p>
 
-Android app for saving recipes from a pasted URL, planning meals for a week,
-and generating a grocery list from the plan. Multi-user: recipes belong to an
-account, not a device.
+<p align="center">
+  <img alt="Status: in development" src="https://img.shields.io/badge/Status-In_development-F08A3C?style=for-the-badge">
+  <img alt="Android 8 or newer" src="https://img.shields.io/badge/Android-8%2B-3DDC84?style=for-the-badge&logo=android&logoColor=white">
+</p>
 
-## Stack
+---
 
-| Piece | Choice |
+### Tired of scrolling past someone's life story to get to the recipe, then writing the grocery list by hand?
+
+**That's what Cookr is for.** Paste a recipe's link and Cookr keeps just the recipe: the ingredients and the steps. Plan the week's meals from your saved recipes, and Cookr adds up everything you need into one grocery list ("2 cloves garlic" plus "1 clove garlic" becomes 3).
+
+> [!IMPORTANT]
+> Cookr is still being built and there's no download yet. The list below is what it's for; the progress list further down shows what's done.
+
+## ✨ What it does
+
+| | |
 |---|---|
-| Client | Android, Kotlin + Jetpack Compose |
-| Build | AGP 9.4.0 / Gradle 9.6.0 / JDK 17 |
-| Kotlin | 2.4.21 (AGP 9 built-in Kotlin — no `kotlin-android` plugin) |
-| Compose | BOM 2026.09.00, Material 3 |
-| Backend | Supabase (Postgres + Auth + Storage) |
-| Client lib | supabase-kt 3.8.0 on Ktor/OkHttp |
-| minSdk / compileSdk / targetSdk | 26 / 37 / 36 |
+| 🔗 **Save from a link** | Paste a recipe's address and Cookr pulls out the ingredients and steps. |
+| 📅 **Plan the week** | Put recipes on the days you'll cook them. |
+| 🛒 **One grocery list** | Every ingredient for the week, added up and in one place. |
+| 👤 **Your account, any device** | Recipes belong to your account, not your phone, so they follow you. |
+| 🔒 **Private by default** | Only you can see your recipes and plans. |
 
-There is deliberately no DI framework yet. The Supabase client is a single
-object; Hilt can come in when there is enough to inject to justify the
-KSP/version coupling.
+## 🚧 Progress
 
-## First-time setup
-
-1. **Supabase project.** Create one, then run `supabase/schema.sql` in the SQL
-   editor. Create a public storage bucket named `recipe-images`.
-2. **Credentials.** Copy `local.properties.example` to `local.properties` and
-   fill in `SUPABASE_URL` and `SUPABASE_ANON_KEY` from Settings → API.
-   `local.properties` is git-ignored.
-   The anon key is meant to ship in a client — Row Level Security is what
-   protects the data. Never put the `service_role` key in this app.
-3. **Build.**
-   ```
-   .\gradlew assembleDebug
-   ```
-   The APK lands in `app/build/outputs/apk/debug/`.
-
-## Layout
-
-```
-app/src/main/java/com/alexray/cookr/
-  MainActivity.kt
-  data/
-    SupabaseClient.kt      single client instance
-    model/                 @Serializable row models
-    repository/            Auth + Recipe data access
-  ui/
-    theme/                 Compose theme
-    auth/                  sign-in / sign-up
-    recipes/               recipe list + detail
-    navigation/            top-level routes
-supabase/
-  schema.sql               tables, triggers, RLS policies
-```
-
-## Data model notes
-
-`recipe_ingredients` stores both `raw_text` ("2 cloves garlic, minced") and a
-parsed split (`quantity`, `unit`, `item`, `note`). The split is what makes
-grocery aggregation possible — "2 cloves garlic" plus "1 clove garlic" has to
-roll up to 3 — and `raw_text` is what gets displayed and the fallback when a
-line won't parse. **Unit normalization has to happen at import time, not when
-the list is generated.**
-
-Every table has RLS on. Owned tables check `owner_id = auth.uid()`; child
-tables check ownership through their parent row.
-
-## URL import
-
-Parsing runs server-side in a Supabase edge function, not on the device:
-
-1. Client sends the URL.
-2. Function normalizes it and checks `source_cache` — a hit returns at once.
-3. Miss: fetch the page, try schema.org JSON-LD, then microdata, then an LLM
-   call as fallback.
-4. Result is cached in `source_cache`, shared across all accounts.
-5. Client shows it for confirmation; on save, rows are written under the
-   user's `owner_id`.
-
-Server-side because the API key stays off the device, one parse serves every
-user, and parser fixes ship without an app update.
-
-The edge function is **not written yet.**
-
-## Build order
-
-- [x] Supabase schema
-- [x] Project scaffold, toolchain pinned
-- [x] Debug APK builds clean (verified 2026-10-15, ~16 MB)
-- [ ] Supabase project created + schema applied
-- [ ] Signup / login
-- [ ] Recipe list + detail from Supabase
-- [ ] URL import edge function + paste-a-URL flow
+- [x] Database design
+- [x] App set up, and a test build that installs
+- [ ] Sign up and log in
+- [ ] Recipe list and recipe page
+- [ ] Save a recipe from a link
 - [ ] Meal planner (week view)
-- [ ] Grocery list generation
+- [ ] Grocery list
 
-## Setup gotchas (hit while getting this to build)
+## ❓ FAQ
 
-Worth knowing before touching the build files — the Android toolchain moved a
-lot in 2026:
+<details>
+<summary><b>When can I try it?</b></summary>
 
-- **AGP 9 has built-in Kotlin.** Applying `org.jetbrains.kotlin.android` is now
-  an error with the new DSL. It is not in the plugins block on purpose.
-- **The SDK DSL changed.** It is `compileSdk { version = release(37) }`, not
-  `compileSdk = 37`. Same shape for `minSdk` and `targetSdk` inside
-  `defaultConfig`.
-- **`compileSdk` must be at least 37.** Several AndroidX artifacts declare
-  `minCompileSdk 37`; the build fails at `checkDebugAarMetadata` on 36 with a
-  message that reads like a suggestion but is a hard requirement.
-- **SDK platforms now have minor versions** — `platforms;android-37.0`, `37.1`,
-  `37.2`. `release(37)` resolves to `android-37.0`.
-- **Material 3 `TopAppBar` is still experimental**, so screens using it need
-  `@OptIn(ExperimentalMaterial3Api::class)`.
-- **`sdkmanager` is deprecated** in favour of the new `android` CLI in
-  `cmdline-tools/latest/bin`. Use `android sdk install <pkg>` and
-  `android sdk list --all`. Pass `--no-metrics` to opt out of usage reporting.
-- **Windows file locking** bites on rebuilds: if a Kotlin task fails with
-  "Unable to delete directory ... cacheable", run `gradle --stop` and delete
-  `app/build`.
+Once sign-in, recipes and link import work, a download will appear on this page. Until then there's nothing to install.
+</details>
 
-## Open questions
+<details>
+<summary><b>Will it work with any recipe site?</b></summary>
 
-- Re-host scraped images in Supabase Storage, or hotlink the source? Re-hosting
-  costs storage but survives dead links.
-- Offline reading: add a Room cache, or stay online-only for v1?
-- `applicationId` is `com.alexray.cookr` — change it before any Play
-  Store submission if you want a domain you control.
-- `isMinifyEnabled` is off for release. Turning it on needs the
-  kotlinx.serialization keep rules in `proguard-rules.pro` verified first.
+Most recipe sites describe their recipes in a standard format that Cookr can read. For the ones that don't, it has a fallback that reads the page itself. Each link is read once and shared, so popular recipes import instantly.
+</details>
+
+## 🛠️ For developers
+
+<details>
+<summary>How it's built, and how to build it</summary>
+
+- Android app in Kotlin and Jetpack Compose (Material 3), with Supabase (Postgres, Auth and Storage) as the backend through supabase-kt.
+- `supabase/schema.sql` holds the tables, triggers and Row Level Security rules: every table checks that the row belongs to the signed-in user.
+- Recipe links are to be read by a Supabase edge function, not on the phone: it tries the page's schema.org JSON-LD, then microdata, then an AI fallback, and caches the result for every account. (Not written yet.)
+- Ingredients keep both the original line and a split into quantity, unit, item and note; the split is what lets the grocery list add things up.
+
+**Build it**
+
+1. Create a Supabase project, run `supabase/schema.sql` in its SQL editor, and add a public storage bucket named `recipe-images`.
+2. Copy `local.properties.example` to `local.properties` and fill in `SUPABASE_URL` and `SUPABASE_ANON_KEY` (Settings → API). Never put the `service_role` key in the app.
+3. Run `.\gradlew assembleDebug`. The APK lands in `app/build/outputs/apk/debug/`.
+
+**Toolchain notes:** AGP 9 has Kotlin built in (no `kotlin-android` plugin), the SDK is set with `compileSdk { version = release(37) }`, and `compileSdk` must be at least 37 because several AndroidX libraries require it. On Windows, if a rebuild fails with "Unable to delete directory", run `gradle --stop` and delete `app/build`.
+</details>
